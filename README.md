@@ -22,8 +22,8 @@
     * 基於 MMPose 進行二次開發。
     * 在原有的COCO17個關鍵點上，自定義了6個關鍵點，共23個關鍵點，以及改用 EPE做為評估指標。
 
-3.  **pose classification (`pose_classification-master`)**: 
-    * 使用 FCNN 進行姿勢分類。
+3.  **pose recognition (`pose_classification-master`)**: 
+    * 使用 FCNN 進行姿勢辨識。
 
 ## 📈 實驗結果 (Experimental Results)
 
