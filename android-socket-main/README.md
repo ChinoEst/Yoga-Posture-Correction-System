@@ -19,7 +19,7 @@
 
 負責接收來自手機的影像流，並提供緩衝區供後端模型推論。
 
-### 1. 建立虛擬環境 (建議)
+### 1. 環境設置
 建議使用 `conda` 或 `venv` 隔絕環境：
 ```bash
 python -m venv venv
@@ -28,4 +28,5 @@ python -m venv venv
 # Linux/Mac 啟動環境
 source venv/bin/activate
 
+### 2. 運行
 python server.py
