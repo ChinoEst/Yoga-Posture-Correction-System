@@ -38,7 +38,7 @@
 ## 🏗️ 連線機制 (Connection Architecture)
 | 連線總體架構示意圖 |
 | :---: | 
-| ![System Architecture](images/Architecture_servers.jpg) |
+| ![System Architecture](images/Architecture_servsers.jpg) |
 
 
 ## 🚀 安裝
