@@ -1,0 +1,14 @@
+#Fold
+result/
+data/
+data_angle/
+dataset_input/
+
+#File
+single_frame.rar
+move.py
+
+
+#Caches
+**/__pycache__/
+*.py[cod]
