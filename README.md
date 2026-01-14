@@ -35,7 +35,13 @@
 | **定位誤差 (Position Error)** | **低於 10 公分** (優於國際標準) |
 | **即時性 (Latency)** | 支援近即時影像回饋，有效提升練習安全性 |
 
-## 🚀 模組設置
+## 🏗️ 連線機制 (Connection Architecture)
+| 連線總體架構示意圖 |
+| :---: | 
+| ![System Architecture](images/Architecture_servsers.jpg) |
+
+
+## 🚀 安裝
 
 請分別進入
 * [android-socket-main](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/android-socket-main)
