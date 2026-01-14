@@ -12,7 +12,7 @@
 ## 🏗 系統架構 (System Architecture)
 | 系統總體架構圖 | 圖例說明 |
 | :---: | :---: |
-| ![System Architecture](images/Architecture.jpg) | ![Legend](images/Figure.jpg) |
+| ![System Architecture](images/Architecture.jpg) | ![Legend](images/FIGURE.jpg) |
 
 1.  **android app & server (`android-socket-main`)**: 
     * 負責將手機端攝像頭影像壓縮並透過 Socket 協定傳輸。包含 App 端 Client 與後端接收 Server，透過 Socket 協定實現低延遲的雙向影像傳輸。
