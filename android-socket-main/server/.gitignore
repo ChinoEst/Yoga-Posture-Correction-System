@@ -1,0 +1,13 @@
+#Fold
+analyze/
+temp_obj/
+
+#File
+save_list.json
+pratice_threadpool.py
+test_code.py
+t.py
+
+#Caches
+**/__pycache__/
+*.py[cod]
