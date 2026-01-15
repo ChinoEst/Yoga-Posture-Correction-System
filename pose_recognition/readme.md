@@ -26,12 +26,12 @@
 conda create --name yoga-pose python=3.8 -y
 conda activate yoga-pose
 pip install -r requirements.txt
-
+```
 
 ## train
 ```bash
 python FCNN.py --feature 34 --name yoga_model --batch 64 --num_classes 10 --side both
-
+```
 | Argument | type | Description |
 | feature | int | nums of features, we use 23*2 46|
 | name | str | filename |
@@ -44,7 +44,11 @@ python FCNN.py --feature 34 --name yoga_model --batch 64 --num_classes 10 --side
 [model]()
 
 ## prediction
+```bash
 python pred.py
+```
 
 ## server
+```bash
 python pre_rate_API.py
+```
