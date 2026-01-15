@@ -21,8 +21,7 @@ public class MainActivity_home extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home); // 绑定新的 XML 布局
-
+        setContentView(R.layout.activity_home); 
         ImageButton difficultyButton = findViewById(R.id.imageButton);
         difficultyButton.setOnClickListener(v -> showDialogSetting());
 
@@ -45,7 +44,6 @@ public class MainActivity_home extends AppCompatActivity {
                 })
                 .setNegativeButton("取消", null)
                 .show();
-        // 停用返回鍵，不執行任何操作
     }
 
     private void showDialogSetting() {
@@ -69,24 +67,23 @@ public class MainActivity_home extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        // 設定 Spinner 的預設選項
-        int selectedIndex = StateSingleton.getInstance().difficult; // 獲取 difficult 的索引值
+        // set Spinner 
+        int selectedIndex = StateSingleton.getInstance().difficult; // get value of difficult 
         if (selectedIndex >= 0 && selectedIndex < options.length) {
-            spinner.setSelection(selectedIndex);  // 設定選中的項目
+            spinner.setSelection(selectedIndex); 
         }
 
         btnCancel.setOnClickListener(v -> {
-            dialog.dismiss(); // 取消時不保存設定，直接關閉對話框
+            dialog.dismiss(); 
         });
 
         btnConfirm.setOnClickListener(v -> {
             String selected = spinner.getSelectedItem().toString();
             Toast.makeText(this, "你選的是: " + selected, Toast.LENGTH_SHORT).show();
 
-            // 保存當前選擇的難度設定
             StateSingleton.getInstance().difficult = Arrays.asList(options).indexOf(selected);
 
-            dialog.dismiss(); // 保存後關閉對話框
+            dialog.dismiss(); 
         });
 
         dialog.show();
