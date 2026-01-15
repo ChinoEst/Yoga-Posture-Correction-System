@@ -45,7 +45,7 @@ public class CustomSurfaceListener implements TextureView.SurfaceTextureListener
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
         // check if the bytes should be transfered
-        //這一塊會一直運行
+        //always running
 
         if (!StateSingleton.getInstance().waitInterval && StateSingleton.getInstance().runScanning) {
             if (StateSingleton.getInstance().first) {
@@ -69,7 +69,7 @@ public class CustomSurfaceListener implements TextureView.SurfaceTextureListener
                                 Log.d(StateSingleton.getInstance().TAG, "Operation was successful!");
                                 StateSingleton.getInstance().first = false;
 
-                                voiceHandler.playAudioByNumber(21); // 播放 raw21.mp3
+                                voiceHandler.playAudioByNumber(21); // play raw21.mp3
                                 Log.d(StateSingleton.getInstance().TAG, "raw21");
 
                                 // stop waiting
