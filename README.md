@@ -45,5 +45,5 @@
 
 ## 📂 Project Structure
 * [android-socket](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/android-socket): Mobile client and communication hub.
-* [mmpose-custom](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/mmpose-custom): FCNN model for pose recognition (99.1% accuracy).
+* [mmpose-custom](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/mmpose-custom): FCNN model for pose recognition.
 * [pose_recognition](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/pose_recognition): Keypoint extraction engine based on MMPose.
