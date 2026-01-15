@@ -49,7 +49,7 @@ python FCNN.py --feature 34 --name yoga_model --batch 64 --num_classes 10 --side
 <br>
 
 ## model
-[model](https://drive.google.com/file/d/1hNoGTb37kmbyRJ6nNCJuN5uTK97SYCOu/view?usp=sharing)
+[Click here to download model](https://drive.google.com/file/d/1hNoGTb37kmbyRJ6nNCJuN5uTK97SYCOu/view?usp=sharing)
 
 <br>
 
