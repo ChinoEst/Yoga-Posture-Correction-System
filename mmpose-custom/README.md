@@ -36,18 +36,15 @@ conda activate mmpose-yoga
 
 ## 自定義修改說明
 為了將 MMPose 整合至本系統，請進行以下檔案遷移與配置：
-<br>
-custom.py 移至 configs/_base_/datasets
-<br>
-__init__.py 和 my_metricd.py 移至mmpose/evaluation/metrics
-<br>
-final_config.py 移至configs/body_2d_keypoint/rtmpose/coco
+*  custom.py 移至 configs/_base_/datasets
+*  __init__.py 和 my_metricd.py 移至mmpose/evaluation/metrics
+*  final_config.py 移至configs/body_2d_keypoint/rtmpose/coco
 
 <br>
 
 ## model
 
-[download](https://drive.google.com/file/d/1b54simMddB91Rq3FjeJnC3_S71g7etKo/view?usp=sharing)
+[Click here to download](https://drive.google.com/file/d/1b54simMddB91Rq3FjeJnC3_S71g7etKo/view?usp=sharing)
 
 
 <br>
