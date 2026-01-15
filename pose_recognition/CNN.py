@@ -12,52 +12,52 @@ import logging
 import argparse
 
 
-# 設置 GPU
+#GPU
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# 使用 padding 保证卷积后的大小不会过小
+# Model definition
 class CNN(nn.Module):
     def __init__(self, num_classes):
         super(CNN, self).__init__()
-        self.conv1 = nn.Conv1d(in_channels=2, out_channels=64, kernel_size=3, padding=1)  # 使用 padding=1
+        self.conv1 = nn.Conv1d(in_channels=2, out_channels=64, kernel_size=3, padding=1) 
         self.pool = nn.MaxPool1d(kernel_size=2, stride=2)
-        self.conv2 = nn.Conv1d(64, 128, 3, padding=1)  # 使用 padding=1
-        self.conv3 = nn.Conv1d(128, 256, 3, padding=1)  # 使用 padding=1
-        self.conv4 = nn.Conv1d(256, 512, 3, padding=1)  # 使用 padding=1
-        self.fc1 = nn.Linear(512 * 2, 128)  # 根据实际调整
+        self.conv2 = nn.Conv1d(64, 128, 3, padding=1)  
+        self.conv3 = nn.Conv1d(128, 256, 3, padding=1)  
+        self.conv4 = nn.Conv1d(256, 512, 3, padding=1)  
+        self.fc1 = nn.Linear(512 * 2, 128)  
         self.fc2 = nn.Linear(128, num_classes)
         self.relu = nn.ReLU()
     
     def forward(self, x):
         x = x.squeeze(-1)
-        x = self.relu(self.conv1(x))  # 输入：[batch_size, 2, 23]，输出：[batch_size, 64, 23]，由于有 padding 大小不变
-        x = self.pool(x)  # 输出：[batch_size, 64, 11]
+        x = self.relu(self.conv1(x))  # [batch_size, 2, 23] to [batch_size, 64, 23]
+        x = self.pool(x)  # [batch_size, 64, 11]
         
-        x = self.relu(self.conv2(x))  # 输出：[batch_size, 128, 11]，有 padding 大小保持不变
-        x = self.pool(x)  # 输出：[batch_size, 128, 5]
+        x = self.relu(self.conv2(x))  
+        x = self.pool(x)  # [batch_size, 128, 5]
         
-        x = self.relu(self.conv3(x))  # 输出：[batch_size, 256, 5]
-        x = self.pool(x)  # 输出：[batch_size, 256, 2]
+        x = self.relu(self.conv3(x))  # [batch_size, 256, 5]
+        x = self.pool(x)  # [batch_size, 256, 2]
         
-        x = self.relu(self.conv4(x))  # 输出：[batch_size, 512, 2]，无改变
+        x = self.relu(self.conv4(x))  # [batch_size, 512, 2]
         
-        x = x.view(x.size(0), -1)  # 展平，输出：[batch_size, 512 * 2 = 1024]
+        x = x.view(x.size(0), -1)  # [batch_size, 512 * 2 = 1024]
         x = self.relu(self.fc1(x))
         x = self.fc2(x)
         return x
 
 
-# 1. 修改 Dataset 中數據的格式
+# 1. Dataset definition
 class PoseDataset(Dataset):
     def __init__(self, data, feature):
         self.data = []
         self.labels = []
         for label, samples in data.items():
             for sample in samples:
-                # 將每個樣本轉換為 [2, 23] 的形式，去掉最後一維
-                sample = np.array(sample).reshape(2, int(feature/2))  # 假設每個樣本有 46 個數據（23個關鍵點的x和y）
+                # reshape to  [2, 23]
+                sample = np.array(sample).reshape(2, int(feature/2)) 
                 self.data.append(sample)
-                self.labels.append(int(label) - 1)  # 將標籤轉為 0 索引
+                self.labels.append(int(label) - 1)  
 
         self.data = torch.tensor(self.data, dtype=torch.float32)
         self.labels = torch.tensor(self.labels, dtype=torch.long)
@@ -68,13 +68,13 @@ class PoseDataset(Dataset):
     def __getitem__(self, idx):
         return self.data[idx], self.labels[idx]
 
-# 3. 加載 JSON 數據
+# 3. load JSON 
 def load_data(json_file):
     with open(json_file, 'r') as f:
         data = json.load(f)
     return data
 
-# 4. 訓練模型
+# 4. train
 def train_model(model, train_loader, test_loader, num_epochs, criterion, optimizer, scheduler, logger, path, patience=5):
     best_acc = float(0.0)
     epochs_no_improve = 0
@@ -166,7 +166,7 @@ def train_model(model, train_loader, test_loader, num_epochs, criterion, optimiz
 
     return model, best_preds, best_labels, train_losses, val_losses, train_accuracies, val_accuracies
 
-# 5. 繪製混淆矩陣
+# 5. draw confusion matrix
 def plot_confusion_matrix(y_true, y_pred, classes, path):
     cm = confusion_matrix(y_true, y_pred)
     fig, ax = plt.subplots()
@@ -187,7 +187,7 @@ def plot_confusion_matrix(y_true, y_pred, classes, path):
     fig.tight_layout()
     plt.savefig(f"{path}/confusion_matrix.png")
 
-# 6. 主程序
+# 6. main
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="data")
     parser.add_argument("--batch", type=int, default="64")
@@ -206,7 +206,7 @@ if __name__ == "__main__":
     name = args.name
     feature = args.feature
     
-    # 創建結果資料夾
+    # build fold
     if not os.path.exists("result"):
         os.makedirs("result")
     if not os.path.exists("result/CNN"):
@@ -223,7 +223,7 @@ if __name__ == "__main__":
         os.makedirs(path)
         
     
-    # 設置Logger
+    #Logger
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
      
@@ -236,8 +236,8 @@ if __name__ == "__main__":
     logger.addHandler(console_handler)
     logger.addHandler(file_handler)
 
-    # 加載數據
-    train_data = load_data(f"dataset_input/{test_member}_train.json")  # JSON格式數據: {1:[[23個長度],[23]...], 2...}
+    #load data
+    train_data = load_data(f"dataset_input/{test_member}_train.json")  # format: {1:[[0],...[22]...], 2...}
     test_data = load_data(f"dataset_input/{test_member}_test.json")
     
 
@@ -249,18 +249,17 @@ if __name__ == "__main__":
 
     
     
-       
+    #model setup
     model = CNN(num_classes).to(device)
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.001)
     scheduler = ReduceLROnPlateau(optimizer, 'min', patience=3, factor=0.1)
 
-    # 訓練模型
+    
     model, y_pred, y_true, train_losses, val_losses, train_accuracies, val_accuracies = train_model(model, train_loader, test_loader, num_epochs=50,
                                                                   criterion=criterion, optimizer=optimizer, 
                                                                   scheduler=scheduler, logger=logger, path=path, patience=5)
 
-    # 保存訓練和驗證損失圖
     plt.figure()
     plt.plot(train_losses, label='Train Loss')
     plt.plot(val_losses, label='Validation Loss')
@@ -273,5 +272,4 @@ if __name__ == "__main__":
     plt.legend()
     plt.savefig(f"{path}/accuracy_curve.png")
 
-    # 混淆矩陣
     plot_confusion_matrix(y_true, y_pred, [str(i) for i in range(1, num_classes+1)], path)
