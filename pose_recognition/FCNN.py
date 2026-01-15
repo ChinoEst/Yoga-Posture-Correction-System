@@ -12,10 +12,10 @@ import logging
 import argparse
 
 
-# 設置 GPU
+# GPU
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# 1. 自定義 Dataset
+# 1. Dataset definition
 class PoseDataset(Dataset):
     def __init__(self, data):
         self.data = []
@@ -34,7 +34,7 @@ class PoseDataset(Dataset):
     def __getitem__(self, idx):
         return self.data[idx], self.labels[idx]
 
-# 2. FCNN 模型
+# 2. FCNN model
 class FCNN(nn.Module):
     def __init__(self, input_dim, num_classes):
         super(FCNN, self).__init__()
@@ -52,13 +52,13 @@ class FCNN(nn.Module):
         x = self.layers(x)
         return x.squeeze(1)
 
-# 3. 加載 JSON 數據
+# 3. load JSON 
 def load_data(json_file):
     with open(json_file, 'r') as f:
         data = json.load(f)
     return data
 
-# 4. 訓練模型
+# 4. train
 def train_model(model, train_loader, test_loader, num_epochs, criterion, optimizer, scheduler, logger, path, patience=5):
     best_acc = float(0.0)
     epochs_no_improve = 0
@@ -150,7 +150,7 @@ def train_model(model, train_loader, test_loader, num_epochs, criterion, optimiz
 
     return model, best_preds, best_labels, train_losses, val_losses, train_accuracies, val_accuracies
 
-# 5. 繪製混淆矩陣
+# 5. draw confusion matrix
 def plot_confusion_matrix(y_true, y_pred, classes, path):
     cm = confusion_matrix(y_true, y_pred)
     fig, ax = plt.subplots()
@@ -171,7 +171,7 @@ def plot_confusion_matrix(y_true, y_pred, classes, path):
     fig.tight_layout()
     plt.savefig(f"{path}/confusion_matrix.png")
 
-# 6. 主程序
+# 6. main
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="data")
     parser.add_argument("--feature", type=int, required=True, help="nums of feature")
@@ -182,7 +182,8 @@ if __name__ == "__main__":
     parser.add_argument("--side", type=str, required=True, help="file name in FCNN")
     
     args = parser.parse_args()
-    
+
+    #arg
     batch = args.batch
     test_member = args.test_member
     num_classes = args.num_classes
@@ -190,7 +191,7 @@ if __name__ == "__main__":
     feature = args.feature
     name = args.name
     
-    # 創建結果資料夾
+    # build fold
     if not os.path.exists("result/FCNN"):
         os.makedirs("result/FCNN")
     
@@ -205,7 +206,7 @@ if __name__ == "__main__":
         os.makedirs(path)
         
     
-    # 設置Logger
+    #Logger
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
      
@@ -218,8 +219,8 @@ if __name__ == "__main__":
     logger.addHandler(console_handler)
     logger.addHandler(file_handler)
 
-    # 加載數據
-    train_data = load_data(f"dataset_input/{test_member}_train.json")  # JSON格式數據: {1:[[23個長度],[23]...], 2...}
+    #load data
+    train_data = load_data(f"dataset_input/{test_member}_train.json")  # JSON format: {1:[[0],[1]...[22], 2...}
     test_data = load_data(f"dataset_input/{test_member}_test.json")
     
 
@@ -231,20 +232,17 @@ if __name__ == "__main__":
     test_loader = DataLoader(test_dataset, batch_size=batch, shuffle=False)
     
     
-    # 模型、損失函數、優化器和學習率調整器
 
-    
+    #model
     model = FCNN(feature, num_classes).to(device)
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.001)
     scheduler = ReduceLROnPlateau(optimizer, 'min', patience=3, factor=0.1)
 
-    # 訓練模型
     model, y_pred, y_true, train_losses, val_losses, train_accuracies, val_accuracies = train_model(model, train_loader, test_loader, num_epochs=50,
                                                                   criterion=criterion, optimizer=optimizer, 
                                                                   scheduler=scheduler, logger=logger, path=path, patience=5)
 
-    # 保存訓練和驗證損失圖
     plt.figure()
     plt.plot(train_losses, label='Train Loss')
     plt.plot(val_losses, label='Validation Loss')
@@ -257,5 +255,4 @@ if __name__ == "__main__":
     plt.legend()
     plt.savefig(f"{path}/accuracy_curve.png")
 
-    # 混淆矩陣
     plot_confusion_matrix(y_true, y_pred, [str(i) for i in range(1, num_classes+1)], path)
