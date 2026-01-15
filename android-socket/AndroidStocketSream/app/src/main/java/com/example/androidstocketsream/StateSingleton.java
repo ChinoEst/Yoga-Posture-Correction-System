@@ -14,10 +14,9 @@ public class StateSingleton {
     public static final String TAG = "AndroidSocketStream";
 
 
-    // 用于追踪活动线程数
+    // traicking numbers of thread
     private final AtomicInteger threadCount = new AtomicInteger(0);
 
-    // SocketStream 实例
     private SocketStream socketStream;
 
     private static StateSingleton INSTANCE = null;
@@ -31,7 +30,6 @@ public class StateSingleton {
         return(INSTANCE);
     }
 
-    // 获取线程计数器
     public AtomicInteger getThreadCount() {
         return threadCount;
     }
@@ -63,22 +61,18 @@ public class StateSingleton {
 
 
 
-    //歸0
+    //set 0
     public void setThreadCount(int value) {
         threadCount.set(value);
     }
 
 
-    /**
-     * 获取 SocketStream
-     */
+
     public SocketStream getSocketStream() {
         return socketStream;
     }
 
-    /**
-     * 设置 SocketStream
-     */
+
     public void setSocketStream(SocketStream socketStream) {
         this.socketStream = socketStream;
     }
@@ -93,19 +87,18 @@ public class StateSingleton {
         difficult = 1;
 
 
-        // 重設線程計數器
         threadCount.set(0);
 
         if (socketStream != null) {
-            socketStream.clearImageList(); // 需要在 SocketStream 里实现此方法
+            socketStream.clearImageList();
         }
 
-        // 清除 callback 或 listener（避免 memory leak）
+        // clean callback or listener（avoid memory leak）
         if (socketStream != null) {
             socketStream.setOnImagesReadyCallback(null);
         }
 
-        // 重設 Response 狀態
+        // reset Response
         socketStream.setSuccessResponse_bbox(false);
         socketStream.setSuccessResponse_connect(false);
         socketStream.setSuccessResponse3(false);
