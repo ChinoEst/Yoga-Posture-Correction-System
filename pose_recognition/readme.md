@@ -1,9 +1,9 @@
 
-## 🖥️ 開發環境配置 
+##  🖥️ 開發環境配置 
 
 建議使用 Anaconda 管理環境以確保版本相容。
 
-##招式
+## 招式
 包含十種拜日式常見招式
 | 動作名稱 (Yoga Pose) | 
 | :--- |
@@ -28,7 +28,7 @@ conda activate yoga-pose
 pip install -r requirements.txt
 
 
-##train
+## train
 ```bash
 python FCNN.py --feature 34 --name yoga_model --batch 64 --num_classes 10 --side both
 
@@ -40,11 +40,11 @@ python FCNN.py --feature 34 --name yoga_model --batch 64 --num_classes 10 --side
 | num_classes | int | numbers of yoga pose , default = 10 |
  
 
-##model
+## model
 [model]()
 
-##prediction
+## prediction
 python pred.py
 
-##server
+## server
 python pre_rate_API.py
