@@ -1,0 +1,11 @@
+# Python 暫存檔
+__pycache__/
+*.pyc
+
+# 作業系統暫存檔
+.DS_Store
+Thumbs.db
+
+# 模型權重 (如果太大不建議直接傳 GitHub)
+*.h5
+*.pth
