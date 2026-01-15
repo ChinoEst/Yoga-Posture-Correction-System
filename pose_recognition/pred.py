@@ -7,7 +7,6 @@ import pandas as pd
 import json
 
 
-# 假设你的FCNN模型已经定义
 class FCNN(torch.nn.Module):
     def __init__(self, input_dim, num_classes):
         super(FCNN, self).__init__()
@@ -25,19 +24,18 @@ class FCNN(torch.nn.Module):
         x = self.layers(x)
         return x.squeeze(1)
 
-# 加载保存的模型权重
+#load weight
 def load_model(model_path, input_dim, num_classes, device='cpu'):
-    # 初始化模型
     model = FCNN(input_dim, num_classes)
     model.load_state_dict(torch.load(model_path, map_location=device))
-    model.to(device)  # 如果你在GPU上推理，这里用.cuda()
-    model.eval()  # 切换到推理模式
+    model.to(device)  
+    model.eval()  
     return model
 
-# 推理函数
+#infer
 def infer(model, test_data, device='cpu'):
-    test_data = torch.tensor(test_data, dtype=torch.float32).to(device)  # 转换为tensor
-    with torch.no_grad():  # 在推理时不需要计算梯度
+    test_data = torch.tensor(test_data, dtype=torch.float32).to(device)  
+    with torch.no_grad(): 
         output = model(test_data)
     return output
 
@@ -46,12 +44,7 @@ def process(path, save_list):
 
     size = 1500
     kp_num = 23
-    
-    
-    
-    
-    
-    
+
     empty = []
     for JSON in save_list:
         with open(f'{path}/{JSON}.json', 'r') as file:
@@ -94,25 +87,21 @@ def process(path, save_list):
     return np.vstack(empty), save_list
     
 
-# 示例推理流程
+
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description="data")
-    parser.add_argument("--model", type=str, required=True)
-    parser.add_argument("--name", type=str, required=True)
-    parser.add_argument("--who", type=str, required=True)
-    #parser.add_argument("--save_list", type=json.loads, help="number of image", required=True)
-    #parser.add_argument("--pose", type=int, required=True)
-    #parser.add_argument("--data", type=str, required=True)
+    parser.add_argument("--model", type=str, required=True, default="best_model.pth")
+    parser.add_argument("--data", type=str, required=True)
     args = parser.parse_args()
     
-    # 假设输入维度和类别数量
-    input_dim = 46  # 输入维度，比如46个特征
-    num_classes = 10  # 类别数量，比如10个类别
-    model_path = f"result/{args.model}/{args.name}/{args.who}/best_model.pth"
+    #args
+    input_dim = 46  
+    num_classes = 10  
+    model_path = f"{args.model}"
     
-    # 加载模型到CPU或GPU
-    device = 'cpu'  # 或者'cuda'如果你使用GPU
+
+    device = 'cpu' 
     model = load_model(model_path, input_dim, num_classes, device)
 
 
@@ -125,22 +114,12 @@ if __name__ == "__main__":
     test_data, file_list = process(path, save_list)
     
 
-    # 推理
     predictions = infer(model, test_data, device)
     predicted_labels = torch.argmax(predictions, dim=1).tolist()
     
     
-    for item, file_number in zip(predicted_labels, file_list):
-        
-        print(f"{item+1}_{file_number}")
-        
 
-    """
-    with open(f"{path}/../output.txt", "w") as file:
-        for item, file in predicted_labels, file_list:
-            file.write(item+1 + "," + file + "\n")  # 每個元素寫入一行
-    """
-
+        
 
             
     
