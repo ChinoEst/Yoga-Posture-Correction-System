@@ -33,7 +33,7 @@ pip install -r requirements.txt
 
 ## train
 ```bash
-python FCNN.py --feature 34 --name yoga_model --batch 64 --num_classes 10 --side both
+python FCNN.py --feature 34 --name yoga_model --batch 64 --num_classes 10 --side true
 ```
 
 <br>
