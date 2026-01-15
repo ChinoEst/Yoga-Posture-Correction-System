@@ -61,23 +61,21 @@ def process(path):
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description="data")
-    parser.add_argument("--model", type=str, required=True)
-    parser.add_argument("--name", type=str, required=True)
-    parser.add_argument("--who", type=str, required=True)
-    parser.add_argument("--pose", type=int, required=True)
+    parser.add_argument("--model", type=str, default="best_model.pth", )
     parser.add_argument("--data", type=str, required=True)
     args = parser.parse_args()
     
     #args 
     input_dim = 46  
     num_classes = 10  
-    model_path = f'result/{args.model}/{args.name}/{args.who}/best_model.pth' 
+    model_path = args.model
+    data_path = args.data
     
     device = 'cpu' 
     model = load_model(model_path, input_dim, num_classes, device)
 
 
-    path = f"{args.data}/{args.who}/side/{args.pose}/augmentation"
+    path = f"{args.data}"
     
     test_data, file_list = process(path)
     
