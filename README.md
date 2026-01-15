@@ -44,6 +44,6 @@
 ## 🚀 安裝
 
 請分別進入
-* [android-socket-main](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/android-socket-main)
+* [android-socket](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/android-socket)
 * [mmpose-custom](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/mmpose-custom)
-* [pose_classification-master](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/pose_classification-master)
+* [pose_classification](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/pose_classification)
