@@ -79,7 +79,7 @@ public class MainActivity_home extends AppCompatActivity {
 
         btnConfirm.setOnClickListener(v -> {
             String selected = spinner.getSelectedItem().toString();
-            Toast.makeText(this, "你選的是: " + selected, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "您選的是: " + selected, Toast.LENGTH_SHORT).show();
 
             StateSingleton.getInstance().difficult = Arrays.asList(options).indexOf(selected);
 
