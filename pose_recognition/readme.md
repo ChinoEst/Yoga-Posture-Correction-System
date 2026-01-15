@@ -33,8 +33,10 @@ pip install -r requirements.txt
 ```bash
 python FCNN.py --feature 34 --name yoga_model --batch 64 --num_classes 10 --side both
 ```
+
 | Argument | type | Description |
-| feature | int | nums of features, we use 23*2 46|
+| :---: | :---: | :---: | :---: |
+| feature | int | nums of features, we use 23*2 46 |
 | name | str | filename |
 | batch | int | batch size |
 | test_member | str | the data of the member is for test, other for train |
