@@ -43,7 +43,7 @@
 
 ## 🚀 安裝
 
-請分別進入
-* [android-socket](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/android-socket)
-* [mmpose-custom](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/mmpose-custom)
-* [pose_recognition](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/pose_recognition)
+## 📂 Project Structure
+* [android-socket](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/android-socket): Mobile client and communication hub.
+* [mmpose-custom](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/mmpose-custom): FCNN model for pose recognition (99.1% accuracy).
+* [pose_recognition](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/pose_recognition): Keypoint extraction engine based on MMPose.
