@@ -36,7 +36,7 @@ public class VoiceHandler {
         }
     }
 
-    #stop
+    //stop
     public void stopAudio() {
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
@@ -45,7 +45,7 @@ public class VoiceHandler {
         }
     }
 
-    #release
+    //release
     public void release() {
         if (mediaPlayer != null) {
             mediaPlayer.release();
