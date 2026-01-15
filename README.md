@@ -14,7 +14,7 @@
 | :---: | :---: |
 | ![System Architecture](images/Architecture.jpg) | ![Legend](images/FIGURE.jpg) |
 
-1.  **android app & server (`android-socket-main`)**: 
+1.  **android app & server (`android-socket`)**: 
     * 負責將手機端攝像頭影像壓縮並透過 Socket 協定傳輸。包含 App 端 Client 與後端接收 Server，透過 Socket 協定實現低延遲的雙向影像傳輸。
 
 
@@ -22,7 +22,7 @@
     * 基於 MMPose 進行二次開發。
     * 在原有的COCO17個關鍵點上，自定義了6個關鍵點，共23個關鍵點，以及改用 EPE做為評估指標。
 
-3.  **pose recognition (`pose_classification-master`)**: 
+3.  **pose recognition (`pose_recognition`)**: 
     * 使用 FCNN 進行姿勢辨識。
 
 ## 📈 實驗結果 (Experimental Results)
@@ -46,4 +46,4 @@
 請分別進入
 * [android-socket](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/android-socket)
 * [mmpose-custom](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/mmpose-custom)
-* [pose_classification](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/pose_classification)
+* [pose_recognition](https://github.com/ChinoEst/Yoga-Posture-Correction-System/tree/master/pose_recognition)
