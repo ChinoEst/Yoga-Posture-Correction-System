@@ -38,8 +38,8 @@ public class SocketStream {
     private static final String url = "http://140.116.245.200:65501";
 
     private Socket mSocket;
-    private final List <Bitmap> imageList = new ArrayList<>(); // 存圖片名稱與 Bitmap
-    private OnImagesReadyCallback onImagesReadyCallback; // 回調接口
+    private final List <Bitmap> imageList = new ArrayList<>(); // save filename and Bitmap
+    private OnImagesReadyCallback onImagesReadyCallback;
     private final Object successLock = new Object();
     private final AtomicBoolean successResponse_bbox = new AtomicBoolean(false);
     private final AtomicBoolean successResponse_connect = new AtomicBoolean(false);
@@ -71,8 +71,6 @@ public class SocketStream {
             mSocket.on("response3", onResponse3);
             mSocket.on("response4", onResponse4);
 
-
-            // 新增通用 listener 註冊
             String[] genericEvents = new String[]{
                     "response1", "response2", "response3", "disconnect", "connect_error", "error", "yourCustomEvent"
             };
@@ -90,8 +88,6 @@ public class SocketStream {
         return mSocket != null && mSocket.connected();
     }
 
-
-    // 加入通用 listener
     private void addGenericListener(String eventName) {
         mSocket.on(eventName, args -> {
             Log.d(StateSingleton.getInstance().TAG, "🟡 Generic listener triggered: " + eventName);
@@ -105,14 +101,13 @@ public class SocketStream {
 
 
 
-    // for bbox return
+
     // for bbox return
     private final Emitter.Listener onResponse1 = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             Log.d(StateSingleton.getInstance().TAG, "onResponse1 get");
             if (args.length > 0) {
-                // 提取服务端传回的数据
 
                 JSONObject data = (JSONObject) args[0];
 
@@ -133,7 +128,6 @@ public class SocketStream {
         public void call(Object... args) {
             Log.d(StateSingleton.getInstance().TAG, "onResponse2 get");
             if (args.length > 0) {
-                // 提取服务端传回的数据
 
                 JSONObject data = (JSONObject) args[0];
 
@@ -161,13 +155,11 @@ public class SocketStream {
                     JSONObject jsonResponse = (JSONObject) args[0];
                     successResponse3.set(jsonResponse.optBoolean("success", false));
                     Log.d(StateSingleton.getInstance().TAG, "Response3 success " + successResponse3.get());
-                    // 根据布尔值做进一步的处理
                     if (successResponse3.get()) {
 
                         //server process sucess
                         Log.d(StateSingleton.getInstance().TAG, "Response3 operation was successful!");
 
-                        // 解析并存储 Base64 图片
                         JSONArray imagesArray = jsonResponse.optJSONArray("images");
                         if (imagesArray != null) {
                             imageprocess(imagesArray);
@@ -200,7 +192,7 @@ public class SocketStream {
 
 
 
-    //處理接收的圖片
+    //process image
     private void imageprocess(JSONArray imagesArray){
         try{
             for (int i = 0; i < imagesArray.length(); i++) {
@@ -220,12 +212,12 @@ public class SocketStream {
     }
 
 
-    // 获取图片列表
+
     public List<Bitmap> getImageList() {
         return imageList;
     }
 
-    // 添加設置回調的方法
+
     public void setOnImagesReadyCallback(OnImagesReadyCallback callback) {
         this.onImagesReadyCallback = callback;
     }
@@ -265,7 +257,7 @@ public class SocketStream {
     //send difficult and ask analyze start
     public void attemptSend3(boolean value) {
         try {
-            // 将布尔值直接发送
+
             mSocket.emit("analyze", StateSingleton.getInstance().difficult);
             Log.d(StateSingleton.getInstance().TAG, "Boolean value sent to server: " + value);
         } catch (Exception e) {
