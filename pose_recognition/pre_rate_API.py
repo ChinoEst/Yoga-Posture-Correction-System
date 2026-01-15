@@ -41,14 +41,14 @@ class FCNN(torch.nn.Module):
     def forward(self, x):
         return self.layers(x)
 
-# model init
+#model init
 MODEL = None
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 @app.on_event("startup")
 def load_model():
     global MODEL
-    model_path = "result/FCNN/no3p/dean/best_model.pth"
+    model_path = "best_model.pth"
     MODEL = FCNN().to(DEVICE)
     MODEL.load_state_dict(torch.load(model_path, map_location=DEVICE))
     MODEL.eval()
@@ -91,9 +91,7 @@ def preprocess(data):
 @app.post("/predict")
 async def predict(input_data: dict):  
     try:
-        
-        
-    
+
         logger.info("[INFO] preprocess")
         processed = preprocess(input_data)
         
@@ -126,7 +124,7 @@ async def predict(input_data: dict):
         logger.error(f"fail: {tb_str}")
         return {"error": str(e), "traceback": tb_str}
         
-
+#main
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8001)
