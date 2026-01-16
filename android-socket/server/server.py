@@ -110,16 +110,15 @@ def on_keyframes_done(keyframes):
 
 
 def save_image(img_bytes, img_path):
-    """同步函數：保存圖片到指定路徑"""
+    
     try:
-        # 將 bytes 轉換為 OpenCV 格式
+
         nparr = np.frombuffer(img_bytes, np.uint8)
         img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
         
-        # 創建目錄（如果不存在）
+
         os.makedirs(os.path.dirname(img_path), exist_ok=True)
         
-        # 保存圖片
         cv2.imwrite(img_path, img)
         logging.info(f"[INFO] 圖片已保存至 {img_path}")
     except Exception as e:
@@ -130,7 +129,7 @@ def save_image(img_bytes, img_path):
 
 
 def save_image_worker():
-    """背景任務：持續從佇列中取出圖片並保存"""
+    """background, que.get()and save"""
     while True:
         img_bytes, img_path = image_queue.get()
         save_image(img_bytes, img_path)
@@ -282,7 +281,7 @@ def handleImage(data):
 
 
 
-#拍攝圖片處理
+#process photo
 @socketio.on('analyze')
 def analyze(msg):
     global error, is_processing
@@ -290,6 +289,7 @@ def analyze(msg):
     if is_processing:
         logging.warning("[INFO] processing now, refused request")
         return
+    #for ensure only one client    
     is_processing = True
     
     logging.info('[INFO] analyze get')
