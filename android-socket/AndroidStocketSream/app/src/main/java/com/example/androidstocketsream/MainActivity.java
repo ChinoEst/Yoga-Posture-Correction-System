@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(StateSingleton.getInstance().TAG, "handler.postDelayed1");
 
-        // after 17 seconds, do obkection detection
+        // after 16.5 s, do objection detection for decide whether people in frame or not
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -124,11 +124,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(StateSingleton.getInstance().TAG, "handler.postDelayed2");
                 setRaw1_end(true);
             }
-        }, 23000); // 延遲 20000 毫秒 (20 秒)
+        }, 23000); // delay 23s
     }
 
     public void stopscan_2main2(){
-        //停止運作
+        //stop and switch to Activitaltymain2
 
         //StateSingleton.getInstance().runScanning = false;
         //textureView.setSurfaceTextureListener(null);
